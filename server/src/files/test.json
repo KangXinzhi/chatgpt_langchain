@@ -1,0 +1,90 @@
+{
+  "id": "22c75f6732693f2efd90f03c6d9a617b",
+  "url_token": "kellyyu-11",
+  "name": "kellyyu是个女程序媛",
+  "use_default_avatar": false,
+  "avatar_url": "https://pica.zhimg.com/v2-de9c1361bdc2d91f6cff4c03138e1b9c_l.jpg?source=32738c0c",
+  "avatar_url_template": "https://picx.zhimg.com/v2-de9c1361bdc2d91f6cff4c03138e1b9c.jpg?source=32738c0c",
+  "is_org": false,
+  "type": "people",
+  "url": "https://www.zhihu.com/api/v4/people/kellyyu-11",
+  "user_type": "people",
+  "headline": "女程序媛的自我修养",
+  "headline_render": "女程序媛的自我修养",
+  "gender": -1,
+  "is_advertiser": false,
+  "ip_info": "IP 属地四川",
+  "vip_info": {
+    "is_vip": false,
+    "vip_type": 0,
+    "rename_days": "0",
+    "entrance_v2": null,
+    "rename_frequency": 0,
+    "rename_await_days": 0
+  },
+  "badge": [
+    {
+      "type": "identity",
+      "description": "早稻田大学 工学硕士"
+    }
+  ],
+  "badge_v2": {
+    "title": "早稻田大学 工学硕士",
+    "merged_badges": [
+      {
+        "type": "identity",
+        "detail_type": "identity",
+        "title": "认证",
+        "description": "早稻田大学 工学硕士",
+        "url": "https://zhuanlan.zhihu.com/p/96956163",
+        "sources": [],
+        "icon": "",
+        "night_icon": "",
+        "badge_status": "passed"
+      }
+    ],
+    "detail_badges": [
+      {
+        "type": "identity",
+        "detail_type": "identity_people",
+        "title": "已认证的个人",
+        "description": "早稻田大学 工学硕士",
+        "url": "https://zhuanlan.zhihu.com/p/96956163",
+        "sources": [],
+        "icon": "https://pic1.zhimg.com/v2-2ddc5cc683982648f6f123616fb4ec09_l.png?source=32738c0c",
+        "night_icon": "https://pic1.zhimg.com/v2-2ddc5cc683982648f6f123616fb4ec09_l.png?source=32738c0c",
+        "badge_status": "passed"
+      }
+    ],
+    "icon": "https://picx.zhimg.com/v2-2ddc5cc683982648f6f123616fb4ec09_l.png?source=32738c0c",
+    "night_icon": "https://picx.zhimg.com/v2-2ddc5cc683982648f6f123616fb4ec09_l.png?source=32738c0c"
+  },
+  "allow_message": true,
+  "is_following": false,
+  "is_followed": false,
+  "is_blocking": false,
+  "follower_count": 67,
+  "answer_count": 47,
+  "articles_count": 3,
+  "available_medals_count": 0,
+  "employments": [
+    {
+      "job": {
+        "id": "19551325",
+        "type": "topic",
+        "url": "https://www.zhihu.com/api/v4/topics/19551325",
+        "name": "产品经理",
+        "avatar_url": "https://pica.zhimg.com/v2-6cafd69ed204fafaae834ece2fe8f5cc_l.jpg?source=32738c0c"
+      },
+      "company": {
+        "id": "20650626",
+        "type": "topic",
+        "url": "https://www.zhihu.com/api/v4/topics/20650626",
+        "name": "ANT",
+        "avatar_url": "https://picx.zhimg.com/v2-40e779d5c5e6bcebda41e92d50594618_l.jpg?source=32738c0c"
+      }
+    }
+  ],
+  "is_realname": true,
+  "has_applying_column": false
+}
