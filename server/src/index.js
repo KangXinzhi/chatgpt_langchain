@@ -4,11 +4,14 @@ import fs from 'fs';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import bodyParser from 'body-parser';
-import { chatLangChain } from 'utils/chat'
+import cors from 'cors'
+
+import { chatLangChain } from './utils/index.js'
+
 
 // 创建 Express 应用程序
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.json()); // 解析JSON格式的请求体
 app.use(bodyParser.urlencoded({ extended: true })); // 解析urlencoded格式的请求体
 
@@ -58,13 +61,15 @@ app.delete('/files/:filename', (req, res) => {
 // 定义聊天相关接口
 // 请求数据
 app.post('/chat', async (req, res) => {
-  const { data } = req.body; // 获取请求体中的data字段
-  const newData = await chatLangChain(data); // 处理数据
-  res.send(newData); // 返回新数据
+  const { prompt } = req.body; // 获取请求体中的data字段
+  if(!prompt) return
+  const response = await chatLangChain(prompt); // 处理数据
+  console.log(response)
+  res.send(response); // 返回新数据
 });
 
 // 启动应用程序
-const port = 6666;
+const port = 8000;
 
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

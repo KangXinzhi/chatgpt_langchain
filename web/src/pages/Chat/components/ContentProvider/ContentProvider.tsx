@@ -124,7 +124,7 @@ function ContentProvider({ children }: Props) {
     setInputMessage(JSON.stringify(msg))
     setMsg('')
     // 将api_url替换为你的API接口地址
-    const api_url = 'http://127.0.0.1:8000/predict';
+    const api_url = 'http://127.0.0.1:8000/chat';
 
     var testData = { prompt: temp };
 
@@ -139,7 +139,8 @@ function ContentProvider({ children }: Props) {
       .then(response => response.json())
       .then(data => {
         // 处理响应数据
-        setOutputMessage(JSON.stringify(data.response.response))
+        console.log(data)
+        setOutputMessage(JSON.stringify(data.text))
       })
       .catch(error => {
         console.error(error);

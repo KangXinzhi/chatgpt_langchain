@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tsc --declaration --outDir dist/",
     "start": "tsx -r dotenv/config src/index.ts",
+    "start:node": "node -r dotenv/config src/index.js",
     "start:dist": "yarn build && node -r dotenv/config dist/index.js",
     "lint": "eslint src",
     "lint:fix": "npm run lint --fix",
@@ -28,6 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "hnswlib-node": "^1.4.2",

@@ -13,7 +13,7 @@ const chat = new ChatOpenAI({ temperature: 1 });
 
 const directoryPath = "src/files";
 
-const loadDocs = async (filePath: string) => {
+const loadDocs = async (filePath) => {
   const extname = path.extname(filePath);
   let loader;
 
@@ -55,7 +55,6 @@ docsModal = docsModal.map(item => {
   if (item?.metadata?.pdf) {
     const newItem = { ...item };
     newItem.pageContent = newItem.pageContent.replace(/\n/g, '');
-    console.log(newItem);
     return newItem;
   }
   return item;
@@ -66,12 +65,11 @@ docsModal = docsModal.map(item => {
 const vectorStore = await HNSWLib.fromDocuments(docsModal, new OpenAIEmbeddings());
 
 
-export const chatLangChain = async (QUESTION: string) => {
+export const chatLangChain = async (QUESTION) => {
   // 搜出相关的文档
   const result = await vectorStore.similaritySearchWithScore(QUESTION, 1);
   const docs = result.map(res => res[0]);
 
-  console.log("docs", docs);
   // eslint-disable-next-line consistent-return
   let positiveRes = await Promise.all(docs.map(async (doc) => {
     const res = await chat.call([

@@ -50,12 +50,13 @@ const loadAllDocs = async () => {
 
 let docsModal = await loadAllDocs();
 
+
 docsModal = docsModal.map(item=>{
   // 单独处理pdf文件中的大量的\n
   if (item?.metadata?.pdf){
     const newItem = {...item};
     newItem.pageContent = newItem.pageContent.replace(/\n/g, '');
-    console.log(newItem);
+    // console.log(newItem);
     return newItem;
   }
   return item;
@@ -65,7 +66,8 @@ docsModal = docsModal.map(item=>{
 // Load the docs into the vector store
 const vectorStore = await HNSWLib.fromDocuments(docsModal, new OpenAIEmbeddings());
 
-const QUESTION = '介绍下康斯坦丁';
+
+const QUESTION = '扬州慢的作者是谁';
 
 // 搜出相关的文档
 const result = await vectorStore.similaritySearchWithScore(QUESTION, 1);
@@ -74,8 +76,6 @@ const docs = result.map(res => res[0]);
 console.log("docs",docs);
 // eslint-disable-next-line consistent-return
 let positiveRes = await Promise.all(docs.map(async (doc) => {
-  console.log('doc.pageContent')
-  console.log(doc.pageContent)
   const res = await chat.call([
     new HumanChatMessage(
       `Now, I will show you a context
