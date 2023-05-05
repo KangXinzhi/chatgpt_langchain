@@ -7,11 +7,9 @@ import { useContent } from '../ContentProvider';
 const { TextArea } = Input;
 
 function RightTextInput() {
-  const { openModel1, openModel2, msg, setMsg, handleSend } = useContent();
+  const { openModel1, msg, setMsg, handleSend } = useContent();
 
-  const isPressed = openModel1 || openModel2
-
-
+  const isPressed = openModel1
 
   return (
     <div className={styles.containerOut}>

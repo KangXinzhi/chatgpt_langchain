@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import annyang from 'annyang'
 
 import SpeechRecognitionSingleton from '../../utils/SpeechRecognitionSingleton'
 import SpeechSynthesisSingleton from '../../utils/SpeechSynthesisSingleton'
@@ -16,7 +15,6 @@ export type Context = {
   setOutputMessage: (outputMessage: string) => void
   msg: string
   openModel1: boolean
-  openModel2: boolean
   setMsg: (msg: string) => void
   handleMouseDown: () => void
   handleMouseUp: () => void
@@ -41,7 +39,6 @@ function ContentProvider({ children }: Props) {
   const [outputMessage, setOutputMessage] = useState('');
   const [msg, setMsg] = useState('')
   const [openModel1, setOpenModel1] = useState(false);
-  const [openModel2, setOpenModel2] = useState(false);
 
   const handleCancelAudioModal = () => {
     setAudioModalIsOpen(false);
@@ -66,11 +63,7 @@ function ContentProvider({ children }: Props) {
   recognition.onresult = function (event: { results: { transcript: any; }[][], timeStamp: number }) {
     let result = event.results?.[0]?.[0]?.transcript;
     console.log(result)
-    console.log('111', 111)
-    if (openModel1 || openModel2) {
-      if (openModel2 && result.includes('结束输入')) {
-        setOpenModel2(false)
-      }
+    if (openModel1) {
       if (lastValue === result) {
         setMsg(msg + ',')
       } else {
@@ -81,42 +74,14 @@ function ContentProvider({ children }: Props) {
   }
 
 
-  // useEffect(()=>{
-  //   console.log(recognition)
-  //   if(!recognition) return
-  //   if (openModel1) {
-  //     recognition.start();
-  //   }else{
-  //     recognition.abort();
-  //   }
-  // },[openModel1])
-
   useEffect(() => {
-    if (openModel1 || openModel2) {
-      annyang.abort();
+    if (!recognition) return
+    if (openModel1) {
       recognition.start();
     } else {
-      annyang.start()
       recognition.abort();
     }
-    console.log(recognition)
-  }, [openModel1, openModel2])
-
-  useEffect(() => {
-    // annyang.setLanguage('zh-CN');
-    annyang.addCommands({
-      'test': () => {
-        console.log('测试')
-      },
-      'start': () => {
-        setOpenModel2(true)
-      },
-      'send': () => {
-        console.log('send')
-        handleSend()
-      }
-    })
-  }, [])
+  }, [openModel1])
 
 
   const handleSend = () => {
@@ -157,7 +122,6 @@ function ContentProvider({ children }: Props) {
         outputMessage,
         setOutputMessage,
         openModel1,
-        openModel2,
         msg,
         setMsg,
         handleMouseDown,

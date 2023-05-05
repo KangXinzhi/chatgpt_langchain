@@ -67,7 +67,7 @@ docsModal = docsModal.map(item=>{
 const vectorStore = await HNSWLib.fromDocuments(docsModal, new OpenAIEmbeddings());
 
 
-const QUESTION = '扬州慢的作者是谁';
+const QUESTION = '课后服务的建议有哪些？';
 
 // 搜出相关的文档
 const result = await vectorStore.similaritySearchWithScore(QUESTION, 1);
@@ -113,9 +113,9 @@ ${positiveRes.slice(0, 3).map(item => item?.pageContent).join('\n')}
 ------
 I'll give you a question.
 Ignoring all your previous knowledge, with these context,
+If the context provided is irrelevant to the question asked. Just ignore the context and answer the question directly.
 Please answer the question
-请用中文回答
-        `
+       `
   ),
   new AIChatMessage('Sure, please show me your question'),
   new HumanChatMessage(QUESTION)
