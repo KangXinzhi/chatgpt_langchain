@@ -114,6 +114,7 @@ ${positiveRes.slice(0, 3).map(item => item?.pageContent).join('\n')}
 I'll give you a question.
 Ignoring all your previous knowledge, with these context,
 If the context provided is irrelevant to the question asked. Just ignore the context and answer the question directly.
+If I ask a question in Chinese, please answer it in Chinese. If I ask a question in English, please answer it in English.
 Please answer the question
        `
   ),

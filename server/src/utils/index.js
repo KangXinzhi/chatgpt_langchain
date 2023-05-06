@@ -70,7 +70,6 @@ export const chatLangChain = async (QUESTION) => {
   const result = await vectorStore.similaritySearchWithScore(QUESTION, 1);
   const docs = result.map(res => res[0]);
 
-  // eslint-disable-next-line consistent-return
   let positiveRes = await Promise.all(docs.map(async (doc) => {
     const res = await chat.call([
       new HumanChatMessage(
@@ -92,6 +91,7 @@ export const chatLangChain = async (QUESTION) => {
       return doc;
     }
   }));
+  
 
   positiveRes = positiveRes.filter(r => r);
 
@@ -101,8 +101,8 @@ export const chatLangChain = async (QUESTION) => {
 
   // 将有用的资料拿去生成最终答案
   const finalRes = await chat.call([
-    new HumanChatMessage(
-      `
+   new HumanChatMessage(
+    positiveRes.length ?  `
 Now, I will show you a context
 ------
 ${positiveRes.slice(0, 3).map(item => item?.pageContent).join('\n')}
@@ -110,8 +110,7 @@ ${positiveRes.slice(0, 3).map(item => item?.pageContent).join('\n')}
 I'll give you a question.
 Ignoring all your previous knowledge, with these context,
 Please answer the question
-请用中文回答
-        `
+    `:''
     ),
     new AIChatMessage('Sure, please show me your question'),
     new HumanChatMessage(QUESTION)
