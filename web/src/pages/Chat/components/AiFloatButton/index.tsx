@@ -1,25 +1,23 @@
+import { FloatButton, Tooltip } from 'antd'
 
-import { FloatButton, Tooltip } from 'antd';
+import { AudioOutlined, QuestionOutlined, RobotOutlined, SoundOutlined } from '@ant-design/icons'
 
-import { AudioOutlined, QuestionOutlined, RobotOutlined, SoundOutlined  } from '@ant-design/icons';
-
-import { useContent } from '../ContentProvider';
+import { useContent } from '../ContentProvider'
 
 import styles from './index.module.less'
 
-
 function AiFloatButton() {
-  const { handleOpenAudioModal, handleMouseDown, handleMouseUp, handleAudioPlay } = useContent();
+  const { handleOpenAudioModal, handleMouseDown, handleMouseUp, handleAudioPlay } = useContent()
 
   return (
     <FloatButton.Group
       trigger="hover"
       icon={<RobotOutlined />}
     >
-      <div 
-        className={styles.audioPress} 
-        onMouseDown={handleMouseDown} 
-        onMouseUp={handleMouseUp} 
+      <div
+        className={styles.audioPress}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
         <Tooltip title="按住说话">

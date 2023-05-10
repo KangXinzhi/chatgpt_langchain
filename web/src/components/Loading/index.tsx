@@ -1,8 +1,6 @@
 import './index.less'
 
-
 function Loading() {
-
   return (
     <>
       <div className="sk-fading-circle"></div>

@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export type Context = {
+export interface Context {
   isAudioModalOpen: boolean
   inputMessage: string
   setInputMessage: (inputMessage: string) => void
@@ -26,92 +26,88 @@ export type Context = {
 
 export const ContentContext = React.createContext<Context>({} as Context)
 
-const recognition = SpeechRecognitionSingleton.getInstance();
-const synth = SpeechSynthesisSingleton.getInstance();
+const recognition = SpeechRecognitionSingleton.getInstance()
+const synth = SpeechSynthesisSingleton.getInstance()
 // recognition.start();
 
-let lastValue = '';
-
+let lastValue = ''
 
 function ContentProvider({ children }: Props) {
-  const [isAudioModalOpen, setAudioModalIsOpen] = useState(false);
-  const [inputMessage, setInputMessage] = useState('');
-  const [outputMessage, setOutputMessage] = useState('');
+  const [isAudioModalOpen, setAudioModalIsOpen] = useState(false)
+  const [inputMessage, setInputMessage] = useState('')
+  const [outputMessage, setOutputMessage] = useState('')
   const [msg, setMsg] = useState('')
-  const [openModel1, setOpenModel1] = useState(false);
+  const [openModel1, setOpenModel1] = useState(false)
 
   const handleCancelAudioModal = () => {
-    setAudioModalIsOpen(false);
-  };
+    setAudioModalIsOpen(false)
+  }
 
   const handleOpenAudioModal = () => {
-    setAudioModalIsOpen(true);
-  };
+    setAudioModalIsOpen(true)
+  }
 
   const handleMouseDown = () => {
     setOpenModel1(true)
-  };
+  }
 
   const handleMouseUp = () => {
     setOpenModel1(false)
-  };
+  }
 
   const handleAudioPlay = () => {
-    synth.speak(outputMessage);
-  };
+    synth.speak(outputMessage)
+  }
 
-  recognition.onresult = function (event: { results: { transcript: any; }[][], timeStamp: number }) {
-    let result = event.results?.[0]?.[0]?.transcript;
+  recognition.onresult = function (event: { results: { transcript: any }[][]; timeStamp: number }) {
+    const result = event.results?.[0]?.[0]?.transcript
     console.log(result)
     if (openModel1) {
-      if (lastValue === result) {
-        setMsg(msg + ',')
-      } else {
+      if (lastValue === result)
+        setMsg(`${msg},`)
+      else
         setMsg(msg + result[result.length - 1])
-      }
-      lastValue = result;
+
+      lastValue = result
     }
   }
 
-
   useEffect(() => {
-    if (!recognition) return
-    if (openModel1) {
-      recognition.start();
-    } else {
-      recognition.abort();
-    }
+    if (!recognition)
+      return
+    if (openModel1)
+      recognition.start()
+    else
+      recognition.abort()
   }, [openModel1])
 
-
   const handleSend = () => {
-    let temp = msg;
+    const temp = msg
     setInputMessage(JSON.stringify(msg))
     setMsg('')
     // 将api_url替换为你的API接口地址
-    const api_url = 'http://127.0.0.1:8000/chat';
+    const api_url = 'http://127.0.0.1:8000/chat'
 
-    var testData = { prompt: temp };
+    const testData = { prompt: temp }
 
     // 发送POST请求
     fetch(api_url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(testData)
+      body: JSON.stringify(testData),
     })
       .then(response => response.json())
-      .then(data => {
+      .then((data) => {
         // 处理响应数据
         console.log(data)
         setOutputMessage(JSON.stringify(data.text))
       })
-      .catch(error => {
-        console.error(error);
-      });
+      .catch((error) => {
+        console.error(error)
+      })
   }
-
 
   return (
     <ContentContext.Provider
@@ -129,7 +125,7 @@ function ContentProvider({ children }: Props) {
         handleCancelAudioModal,
         handleOpenAudioModal,
         handleAudioPlay,
-        handleSend
+        handleSend,
       }}
     >
       {children}

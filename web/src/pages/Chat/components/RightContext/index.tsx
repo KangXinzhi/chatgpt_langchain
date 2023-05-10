@@ -1,10 +1,8 @@
-
-import { Avatar } from 'antd';
-import { useEffect, useState } from 'react';
-import classnames from 'classnames';
+import { Avatar } from 'antd'
+import { useEffect, useState } from 'react'
+import classnames from 'classnames'
+import { useContent } from '../ContentProvider'
 import styles from './index.module.less'
-import { useContent } from '../ContentProvider';
-
 
 interface IMessage {
   type: 'input' | 'output'
@@ -12,20 +10,20 @@ interface IMessage {
 }
 
 function RightContext() {
-  const { inputMessage, outputMessage } = useContent();
+  const { inputMessage, outputMessage } = useContent()
 
-  let [message, setMessage] = useState<IMessage[]>([]);
+  const [message, setMessage] = useState<IMessage[]>([])
 
   useEffect(() => {
     if (inputMessage) {
-      let temp: IMessage[] = [...message, { type: 'input', message: inputMessage }]
+      const temp: IMessage[] = [...message, { type: 'input', message: inputMessage }]
       setMessage(temp)
     }
   }, [inputMessage])
 
   useEffect(() => {
     if (outputMessage) {
-      let temp: IMessage[] = [...message, { type: 'output', message: outputMessage }]
+      const temp: IMessage[] = [...message, { type: 'output', message: outputMessage }]
       setMessage(temp)
     }
   }, [outputMessage])
@@ -34,22 +32,24 @@ function RightContext() {
     <div className={styles.container}>
       <div className={styles.chatContainer}>
         {
-          message.map((item,key) => {
+          message.map((item, key) => {
             return (
-              <div 
-                className={classnames(styles.chat, { [styles.chatOutput]: item.type === 'output' })} 
+              <div
+                className={classnames(styles.chat, { [styles.chatOutput]: item.type === 'output' })}
                 key={`message-${key}`}
               >
                 <div className={styles.chatMessage}>
                   <div className={styles.avatar}>
-                    {item.type === 'input' ? (
+                    {item.type === 'input'
+                      ? (
                       <Avatar style={{ backgroundColor: '#f56a00' }}>I</Avatar>
-                    ) : (
+                        )
+                      : (
                       <Avatar style={{ backgroundColor: '#1890ff' }}>O</Avatar>
-                    )}
+                        )}
                   </div>
                   <div className={styles.message}>
-                    {JSON.parse(item.message).split("\n").filter((item: string) => item !== '').map((line: string, i: number) => (
+                    {JSON.parse(item.message).split('\n').filter((item: string) => item !== '').map((line: string, i: number) => (
                       <span key={i}>
                         {line}
                         <br />

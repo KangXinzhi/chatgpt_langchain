@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { FloatButton, Input, Spin, Tooltip } from 'antd'
-import { SendOutlined } from '@ant-design/icons';
+import { Input, Spin, Tooltip } from 'antd'
+import { SendOutlined } from '@ant-design/icons'
+import { useContent } from '../ContentProvider'
 import styles from './index.module.less'
-import { useContent } from '../ContentProvider';
 
-const { TextArea } = Input;
+const { TextArea } = Input
 
 function RightTextInput() {
-  const { openModel1, msg, setMsg, handleSend } = useContent();
+  const { openModel1, msg, setMsg, handleSend } = useContent()
 
   const isPressed = openModel1
 
@@ -25,13 +24,15 @@ function RightTextInput() {
       </div>
       <div className={styles.send}>
         {
-          isPressed ? (
+          isPressed
+            ? (
             <Spin />
-          ) : (
+              )
+            : (
             <Tooltip title="发送">
               <SendOutlined onClick={handleSend} />
             </Tooltip>
-          )
+              )
         }
       </div>
     </div>

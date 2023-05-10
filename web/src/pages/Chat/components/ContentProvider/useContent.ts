@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 
-import { ContentContext, Context } from './ContentProvider'
+import type { Context } from './ContentProvider'
+import { ContentContext } from './ContentProvider'
 
 export default (): Context => useContext(ContentContext)
