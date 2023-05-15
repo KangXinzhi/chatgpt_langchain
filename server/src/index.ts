@@ -8,7 +8,9 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { DocxLoader } from "langchain/document_loaders/fs/docx";
 import { AIChatMessage, HumanChatMessage } from "langchain/schema";
 import { ChatOpenAI } from "langchain/chat_models/openai";
+import { CharacterTextSplitter } from "langchain/text_splitter";
 
+const docAllSplit: any[] = [];
 const chat = new ChatOpenAI({ temperature: 1 });
 const directoryPath = "src/files";
 const loadDocs = async (filePath: string) => {
@@ -60,40 +62,52 @@ docsModal = docsModal.map(item => {
   return item;
 });
 
-console.log('docsModal',docsModal);
+docsModal.map(async item=>{
+  const splitter = new CharacterTextSplitter({
+    separator: " ",
+    chunkSize: 500,
+    chunkOverlap: 3,
+  });
+  // const output = await splitter.createDocuments([item.pageContent]);
+  console.log(item.pageContent);
+  console.log('----------------------------------------------------------------');
+  // docAllSplit = [...docAllSplit,...output];
+});
+
+// console.log(docsModal);
 
 // Load the docs into the vector store
-const vectorStore = await HNSWLib.fromDocuments(docsModal, new OpenAIEmbeddings());
+// const vectorStore = await HNSWLib.fromDocuments(docsModal, new OpenAIEmbeddings());
 
-const QUESTION = '我刚刚问了你哪些人呢？';
+// const QUESTION = '我刚刚问了你哪些人呢？';
 
-// 搜出相关的文档
-const result = await vectorStore.similaritySearchWithScore(QUESTION, 2);
-const docs = result.map(res => res[0]);
+// // 搜出相关的文档
+// const result = await vectorStore.similaritySearchWithScore(QUESTION, 2);
+// const docs = result.map(res => res[0]);
 
-console.log("docs", docs);
+// console.log("docs", docs);
 
-const res = await chat.call([
-  new HumanChatMessage(
-    `Now, I will show you ${docs.length} context
-    ------
-    ${docs.map((doc, index) => (
-      `${index + 1} context:
-       ${doc.pageContent}}
-      `
-    ))}
-    ------
-    I'll give you a question.
-    with these context, I want you to tell me:
-    if the can answer the question please answer question 
-    if cannot answer the question please  answer question by you own knowledge
-    If I ask a question in Chinese, please answer it in Chinese. If I ask a question in English, please answer it in English.
-    Please answer the question directly, without stating the basis for the above
-    `
-  ),
-  new AIChatMessage('Sure, please show me your question'),
-  new HumanChatMessage(QUESTION)
-]);
+// const res = await chat.call([
+//   new HumanChatMessage(
+//     `Now, I will show you ${docs.length} context
+//     ------
+//     ${docs.map((doc, index) => (
+//       `${index + 1} context:
+//        ${doc.pageContent}}
+//       `
+//     ))}
+//     ------
+//     I'll give you a question.
+//     with these context, I want you to tell me:
+//     if the can answer the question please answer question 
+//     if cannot answer the question please  answer question by you own knowledge
+//     If I ask a question in Chinese, please answer it in Chinese. If I ask a question in English, please answer it in English.
+//     Please answer the question directly, without stating the basis for the above
+//     `
+//   ),
+//   new AIChatMessage('Sure, please show me your question'),
+//   new HumanChatMessage(QUESTION)
+// ]);
 
 
-console.log(res);
+// console.log(res);
